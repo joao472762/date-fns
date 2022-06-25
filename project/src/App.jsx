@@ -1,25 +1,53 @@
 import { useState } from 'react';
-import styles from './global.module.css'
+import styles from './global.module.css';
+import {format,formatDistanceToNow} from 'date-fns'
+import ptBr from 'date-fns/locale/pt-BR'
+
 function App() {
 
-  const  [publicationDate,setPublicationDate] =  useState('')
+  const  [publicationDate,setPublicationDate] =  useState({
+    datePublishedAt: '',
+    timeDistance: '',
+    dateISOSFormat: ''
+  })
   
-
-  function handleTime(){
+  let money = 3.20
+  function handlePublicationTime(){
     setInterval(() => {
-      let time = new Date()
-      time = time.toLocaleTimeString()
-      setPublicationDate(time)
+      let longDate = new Date('2022-06-25 11:31:30')
+
+      let datePublishedAt = format(longDate,'EEEE M y',{
+        locale: ptBr
+      })
+    
+     let dateISOSFormat = longDate.toISOString()
+
+      let timeDistance  = formatDistanceToNow(longDate,{
+        locale: ptBr,
+        addSuffix: true
+      })
+      
+      setPublicationDate({
+        datePublishedAt,
+        timeDistance,
+        dateISOSFormat
+      })
      
     },0);
     
   }
-  handleTime()
+  handlePublicationTime()
   return (
     <div className={styles.app}>
-      <time>
-        {publicationDate}
+      <time
+      title={publicationDate.datePublishedAt}
+      dateTime={publicationDate.dateISOSFormat}
+       >
+        Publicado {publicationDate.timeDistance}
       </time>
+      <p>
+       
+      </p>
     </div>
   )
 }
