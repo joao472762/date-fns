@@ -11,7 +11,7 @@ function App() {
     dateISOSFormat: ''
   })
   
-  let money = 3.20
+ 
   function handlePublicationTime(){
     setInterval(() => {
       let longDate = new Date('2022-06-25 11:31:30')
